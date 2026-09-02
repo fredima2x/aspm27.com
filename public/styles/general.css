@@ -1,0 +1,34 @@
+:root {
+  --background: rgb(220, 240, 220);
+  --black: rgb(30, 30, 30);
+  --white: rgb(240, 240, 240);
+}
+
+body {
+  padding: 0px;
+  margin: 0px;
+  height: 150vh;
+  display: flex;
+  justify-content: center;
+  background-color: var(--background);
+}
+
+header {
+  position: fixed;
+  right: 0px;
+  left: 0px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--black);
+  color: var(--white);
+  border-radius: 0 0 5px 5px;
+}
+
+.content-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
