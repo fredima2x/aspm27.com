@@ -4,6 +4,12 @@
   --white: rgb(240, 240, 240);
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   padding: 0px;
   margin: 0px;
@@ -30,8 +36,7 @@ header {
 }
 
 main {
-  width: min(100% - 40px, 1100px);
-  margin: 0px auto;
+  width: 100%;
   padding-top: 90px;
 }
 
@@ -40,7 +45,9 @@ button {
 }
 
 section {
-  margin: 40px 0px;
+  width: 100%;
+  padding: clamp(40px, 8vw, 100px);
+  position: relative;
 }
 
 article {
@@ -73,10 +80,6 @@ header nav {
   gap: 4px;
 }
 
-main > section:first-child {
-  margin-top: 40px;
-}
-
 section h1 {
   margin: 0px;
   max-width: 100%;
@@ -103,6 +106,8 @@ section h1 {
 main > section:nth-child(2) {
   align-items: flex-start;
   gap: 32px;
+  background-color: var(--black);
+  color: var(--white);
 }
 
 main > section:nth-child(2) article {
@@ -130,7 +135,7 @@ main > section:nth-child(2) aside {
   }
 
   main {
-    width: min(100% - 32px, 560px);
+    width: 100%;
     padding-top: 0px;
   }
 
