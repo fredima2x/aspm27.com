@@ -1,0 +1,32 @@
+section {
+  width: 100%;
+  padding: clamp(40px, 8vw, 100px);
+  position: relative;
+}
+
+article {
+  min-width: 0px;
+}
+
+section h1 {
+  margin: 0px;
+  max-width: 100%;
+  text-align: center;
+  letter-spacing: 0px;
+  line-height: 1.1;
+}
+
+main > section:nth-child(2) {
+  align-items: flex-start;
+  gap: 32px;
+  background-color: var(--black);
+  color: var(--white);
+}
+
+main > section:nth-child(2) article {
+  flex: 1 1 0px;
+}
+
+main > section:nth-child(2) aside {
+  flex: 0 1 220px;
+}

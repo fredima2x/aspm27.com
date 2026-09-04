@@ -17,24 +17,6 @@ body {
   background-color: var(--background);
 }
 
-header {
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  left: 0px;
-  z-index: 1;
-  min-height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-  background-color: var(--black);
-  color: var(--white);
-  border-radius: 0 0 5px 5px;
-  padding: 8px 20px;
-}
-
 main {
   width: 100%;
   padding-top: 90px;
@@ -42,50 +24,6 @@ main {
 
 button {
   cursor: pointer;
-}
-
-section {
-  width: 100%;
-  padding: clamp(40px, 8vw, 100px);
-  position: relative;
-}
-
-article {
-  min-width: 0px;
-}
-
-header button {
-  background-color: var(--black);
-  color: var(--white);
-  border: none;
-  margin: 0px;
-  padding: 6px 8px;
-}
-
-header img {
-  height: 25px;
-  width: auto;
-  max-width: 140px;
-  margin: 0px 6px;
-}
-
-header p {
-  margin: 0px 6px;
-}
-
-header nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 4px;
-}
-
-section h1 {
-  margin: 0px;
-  max-width: 100%;
-  text-align: center;
-  letter-spacing: 0px;
-  line-height: 1.1;
 }
 
 .content-centered-column,
@@ -101,21 +39,6 @@ section h1 {
 
 .content-centered-row {
   flex-direction: row;
-}
-
-main > section:nth-child(2) {
-  align-items: flex-start;
-  gap: 32px;
-  background-color: var(--black);
-  color: var(--white);
-}
-
-main > section:nth-child(2) article {
-  flex: 1 1 0px;
-}
-
-main > section:nth-child(2) aside {
-  flex: 0 1 220px;
 }
 
 @media (max-width: 700px) {
