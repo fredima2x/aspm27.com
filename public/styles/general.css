@@ -7,28 +7,152 @@
 body {
   padding: 0px;
   margin: 0px;
-  height: 150vh;
-  display: flex;
-  justify-content: center;
+  min-height: 100vh;
   background-color: var(--background);
 }
 
 header {
   position: fixed;
+  top: 0px;
   right: 0px;
   left: 0px;
-  height: 50px;
+  z-index: 1;
+  min-height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
   background-color: var(--black);
   color: var(--white);
   border-radius: 0 0 5px 5px;
+  padding: 8px 20px;
 }
 
-.content-centered {
+main {
+  width: min(100% - 40px, 1100px);
+  margin: 0px auto;
+  padding-top: 90px;
+}
+
+button {
+  cursor: pointer;
+}
+
+section {
+  margin: 40px 0px;
+}
+
+article {
+  min-width: 0px;
+}
+
+header button {
+  background-color: var(--black);
+  color: var(--white);
+  border: none;
+  margin: 0px;
+  padding: 6px 8px;
+}
+
+header img {
+  height: 25px;
+  width: auto;
+  max-width: 140px;
+  margin: 0px 6px;
+}
+
+header p {
+  margin: 0px 6px;
+}
+
+header nav {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+
+main > section:first-child {
+  margin-top: 40px;
+}
+
+section h1 {
+  margin: 0px;
+  max-width: 100%;
+  text-align: center;
+  letter-spacing: 0px;
+  line-height: 1.1;
+}
+
+.content-centered-column,
+.content-centered-row {
+  display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.content-centered-column {
+  flex-direction: column;
+}
+
+.content-centered-row {
+  flex-direction: row;
+}
+
+main > section:nth-child(2) {
+  align-items: flex-start;
+  gap: 32px;
+}
+
+main > section:nth-child(2) article {
+  flex: 1 1 0px;
+}
+
+main > section:nth-child(2) aside {
+  flex: 0 1 220px;
+}
+
+@media (max-width: 700px) {
+  header {
+    position: static;
+    justify-content: center;
+    padding: 10px 12px;
+  }
+
+  header > div,
+  header nav {
+    flex: 1 1 100%;
+  }
+
+  header nav {
+    order: 3;
+  }
+
+  main {
+    width: min(100% - 32px, 560px);
+    padding-top: 0px;
+  }
+
+  main > section:first-child {
+    margin-top: 32px;
+  }
+
+  main > section:nth-child(2) {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  main > section:nth-child(2) aside {
+    width: 100%;
+    flex-basis: auto;
+  }
+
+  .big {
+    font-size: clamp(2.25rem, 12vw, 4rem);
+  }
+
+  .medium {
+    font-size: 1.1rem;
+  }
 }
