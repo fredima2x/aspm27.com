@@ -19,7 +19,7 @@ body {
 
 main {
   width: 100%;
-  padding-top: 90px;
+  padding-top: 0px;
 }
 
 button {
@@ -62,16 +62,12 @@ button {
     padding-top: 0px;
   }
 
-  main > section:first-child {
-    margin-top: 32px;
-  }
-
-  main > section:nth-child(2) {
+  section {
     flex-direction: column;
     gap: 24px;
   }
 
-  main > section:nth-child(2) aside {
+  section aside {
     width: 100%;
     flex-basis: auto;
   }

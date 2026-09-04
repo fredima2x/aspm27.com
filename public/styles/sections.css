@@ -1,11 +1,15 @@
 section {
   width: 100%;
   padding: clamp(40px, 8vw, 100px);
-  position: relative;
+  align-items: flex-start;
+  gap: 32px;
+  background-color: var(--black);
+  color: var(--white);
 }
 
 article {
   min-width: 0px;
+  flex: 1 1 0px;
 }
 
 section h1 {
@@ -16,17 +20,40 @@ section h1 {
   line-height: 1.1;
 }
 
-main > section:nth-child(2) {
-  align-items: flex-start;
-  gap: 32px;
-  background-color: var(--black);
-  color: var(--white);
+.hero {
+  min-height: 360px;
+  padding-top: 140px;
+  padding-bottom: 167px;
+  position: relative;
+  width: 100%;
 }
 
-main > section:nth-child(2) article {
-  flex: 1 1 0px;
+.hero h1 {
+  width: 100%;
+  margin: 0px;
+  text-align: center;
+  line-height: 1.1;
 }
 
-main > section:nth-child(2) aside {
+@media (max-width: 700px) {
+  .hero {
+    min-height: 300px;
+    padding-top: 180px;
+  }
+
+  section.content-centered-row {
+    flex-direction: column;
+  }
+
+  section article {
+    width: 100%;
+  }
+
+  section article h2 {
+    text-align: center;
+  }
+}
+
+section aside {
   flex: 0 1 220px;
 }
