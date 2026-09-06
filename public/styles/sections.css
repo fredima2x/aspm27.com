@@ -25,10 +25,9 @@ section h1 {
   min-height: 360px;
   padding-top: 140px;
   padding-bottom: 167px;
-  position: sticky;
   top: 0px;
   width: 100%;
-  z-index: -25;
+  position: relative;
 }
 
 .hero h1 {
