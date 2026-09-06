@@ -5,6 +5,7 @@ section {
   gap: 32px;
   background-color: var(--black);
   color: var(--white);
+  position: relative;
 }
 
 article {
@@ -24,8 +25,10 @@ section h1 {
   min-height: 360px;
   padding-top: 140px;
   padding-bottom: 167px;
-  position: relative;
+  position: sticky;
+  top: 0px;
   width: 100%;
+  z-index: -25;
 }
 
 .hero h1 {

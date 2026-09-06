@@ -1,6 +1,6 @@
 .wave {
   position: absolute;
-  bottom: 0;
+  top: -127px;
   left: 50%;
   width: 100vw;
   overflow: hidden;
