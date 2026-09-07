@@ -8,7 +8,7 @@
                     <p class="download-os-label">Loading...</p>
                     <p class="download-version-label">Loading...</p>
                 </button>
-                <div class="alternative-download-container">
+                <div class="alt-download-container">
                     Loading...
                 </div>
             </div>
@@ -22,6 +22,7 @@
             const downloadOSLabel = downloadButton.querySelector('.download-os-label');
             const downloadLabel = downloadButton.querySelector('.download-label');
             const downloadVersionLabel = downloadButton.querySelector('.download-version-label')
+            const altDownloadContainer = document.querySelector('.alt-download-container')
 
             let downloadURLs = {};
             let operatingSystem = "";
@@ -113,6 +114,22 @@
               } else {
                 downloadOSLabel.textContent = `${operatingSystem} (${getAssetSuffix(operatingSystem)})`;
               }
+
+              let alternativeDownloads = [];
+              alternativeDownloads.push("Windows");
+              alternativeDownloads.push("macOS");
+              alternativeDownloads.push("Linux");
+              alternativeDownloads.push("Linux-deb");
+              alternativeDownloads.push("Linux-rpm");
+              alternativeDownloads = alternativeDownloads.filter(element => element !== operatingSystem);
+
+              alternativeDownloads.forEach((os) => {
+                altDownloadContainer.innerHTML = "";
+                let element = document.createElement(
+                  `<p href="${downloadURLs[os]}" class="alt-download-${os}">- ${os} (${getAssetSuffix(os)})</p>`
+                );
+                altDownloadContainer.appendChild(element);
+              });
             }
 
             await init();
