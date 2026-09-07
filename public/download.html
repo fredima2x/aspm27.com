@@ -1,15 +1,107 @@
 <!DOCTYPE html>
 <html>
 
-<head></head>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="./styles/index/general.css">
+	<link rel="stylesheet" href="./styles/index/header.css">
+	<link rel="stylesheet" href="./styles/index/fonts.css">
 
-<body>
+	<style>
+		body {
+			color: var(--black);
+			justify-items: center;
+			padding-top: 100px;
+			background-color: var(--black);
+		}
+
+		header {
+			background-color: var(--background);
+			color: inherit;
+		}
+
+		header button {
+			color: inherit;
+			background-color: var(--background);
+		}
+
+		img {
+			width: 75px;
+			margin: 10px;
+		}
+
+		button {
+			background-color: var(--background);
+			color: inherit;
+			border: none;
+			margin: 0px;
+			padding: 10px 10px;
+			border-radius: 15px;
+			border: 1px solid var(--gray);
+		}
+
+		h1 {
+			color: var(--background);
+		}
+
+		.download-page {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+		}
+
+		.download-button {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: row;
+			background-image: linear-gradient(to right, var(--background), rgb(170, 190, 170));
+		}
+
+	</style>
+</head>
+
+<body class="google-sans-normal">
+	<header class="normal">
+		<div class="content-centered-row">
+			<img src="" alt="LOGO">
+		</div>
+
+		<nav class="content-centered-row">
+			<button class="js-button1">The aspm project</button>
+			<button class="js-button2">About us</button>
+			<button class="js-button3">Download</button>
+		</nav>
+
+		<div class="content-centered-row">
+			<p>Contact us:</p>
+			<a href="https://github.com/fredima2x/aspm27">
+				<img src="./assets/GitHub_Lockup_White.svg" alt="GitHub logo">
+			</a>
+			<a href="https://facebook.com">
+				<img src="./assets/Facebook_Logo_Primary.png" alt="FaceBook logo">
+			</a>
+		</div>
+	</header>
+
+	<h1>Download aspm27</h1>
 
 	<div class="download-page">
 		<button class="download-button">
-			<p class="download-label">Download</p>
-			<p class="download-os-label">Loading...</p>
-			<p class="download-version-label">Loading...</p>
+			<img src="./assets/Apple_logo_black.svg" alt="apple logo">
+
+			<div class="download-button-text">
+				<p class="download-label">Download</p>
+				<p class="download-os-label">Loading...</p>
+				<p class="download-version-label">Loading...</p>
+			</div>
 		</button>
 
 		<ul class="alt-download-container">
