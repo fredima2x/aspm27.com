@@ -2,11 +2,16 @@
     <html>
         <head></head>
         <body>
-            <button class="download-button">
-                <p class="download-label">Download</p>
-                <p class="download-os-label">Loading...</p>
-                <p class="download-version-label">Loading...</p>
-            </button>
+            <div class="download-page">
+                <button class="download-button">
+                    <p class="download-label">Download</p>
+                    <p class="download-os-label">Loading...</p>
+                    <p class="download-version-label">Loading...</p>
+                </button>
+                <div class="alternative-download-container">
+                    Loading...
+                </div>
+            </div>
             <script type="module">
 
             const supportedOS = [
@@ -69,15 +74,37 @@
             }
 
             async function init() {
-              const release = await getLatestRelease();
+              const cachedRelease = localStorage.getItem("latest_github_release");
+              const lastUpdate = localStorage.getItem("latest_github_release_last_update");
+              const oneDay = 24 * 60 * 60 * 1000;
+              let release;
+
+              if (
+                !cachedRelease ||
+                !lastUpdate ||
+                Date.now() - Number(lastUpdate) >= oneDay
+              ) {
+                try {
+                  release = await getLatestRelease();
+                } catch {
+                  console.error("Error Fetching Release Information!")
+                  return;
+                }
+                localStorage.setItem("latest_github_release", JSON.stringify(release));
+                localStorage.setItem("latest_github_release_last_update", Date.now().toString());
+              } else {
+                release = JSON.parse(cachedRelease);
+              }
+
               downloadURLs = {
                 "Windows": getAssetURL(release, "Windows"),
                 "macOS": getAssetURL(release, "macOS"),
                 "Linux": getAssetURL(release, "Linux"),
                 "Linux-deb": getAssetURL(release, "Linux-deb"),
                 "Linux-rpm": getAssetURL(release, "Linux-rpm"),
-              }
-              operatingSystem = getOS();
+              };
+
+               operatingSystem = getOS();
 
               downloadVersionLabel.textContent = release.tag_name;
 
