@@ -127,7 +127,7 @@ async function init() {
 
     element.href = downloadURLs[os];
     element.className = `alt-download-${os}`;
-    element.textContent = `- ${os} (${getAssetSuffix(os)})`;
+    element.textContent = `- ${os} (${getAssetSuffix(os)})<br/>`;
 
     altDownloadContainer.appendChild(element);
   });
