@@ -74,12 +74,14 @@
                 "Windows": getAssetURL(release, "Windows"),
                 "macOS": getAssetURL(release, "macOS"),
                 "Linux": getAssetURL(release, "Linux"),
+                "Linux-deb": getAssetURL(release, "Linux-deb"),
+                "Linux-rpm": getAssetURL(release, "Linux-rpm"),
               }
               operatingSystem = getOS();
 
               downloadVersionLabel.textContent = release.tag_name;
 
-              if (!operatingSystem) {
+              if (!operatingSystem || !supportedOS.includes(operatingSystem)) {
                 downloadOSLabel.textContent = "Your OS is not supported!";
               } else {
                 downloadOSLabel.textContent = `${operatingSystem} (${getAssetSuffix(operatingSystem)})`;
