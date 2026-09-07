@@ -138,11 +138,9 @@
             element => element !== operatingSystem
           );
 
-          // Nur einmal leeren, nicht bei jedem Durchlauf
           altDownloadContainer.innerHTML = "";
 
           alternativeDownloads.forEach((os) => {
-            // <p> mit createElement erstellen
             let element = document.createElement("a");
 
             element.href = downloadURLs[os];
