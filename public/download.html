@@ -1,152 +1,172 @@
-<DOCTYPE! html>
-    <html>
-        <head></head>
-        <body>
-            <div class="download-page">
-                <button class="download-button">
-                    <p class="download-label">Download</p>
-                    <p class="download-os-label">Loading...</p>
-                    <p class="download-version-label">Loading...</p>
-                </button>
-                <div class="alt-download-container">
-                    Loading...
-                </div>
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <div class="download-page">
+            <button class="download-button">
+                <p class="download-label">Download</p>
+                <p class="download-os-label">Loading...</p>
+                <p class="download-version-label">Loading...</p>
+            </button>
+
+            <div class="alt-download-container">
+                Loading...
             </div>
-            <script type="module">
+        </div>
 
-            const supportedOS = [
-              "Windows", "macOS", "Linux"
-            ]
+        <script type="module">
 
-            const downloadButton = document.querySelector('.download-button');
-            const downloadOSLabel = downloadButton.querySelector('.download-os-label');
-            const downloadLabel = downloadButton.querySelector('.download-label');
-            const downloadVersionLabel = downloadButton.querySelector('.download-version-label')
-            const altDownloadContainer = document.querySelector('.alt-download-container')
+        const supportedOS = [
+          "Windows", "macOS", "Linux"
+        ]
 
-            let downloadURLs = {};
-            let operatingSystem = "";
+        const downloadButton = document.querySelector('.download-button');
+        const downloadOSLabel = downloadButton.querySelector('.download-os-label');
+        const downloadLabel = downloadButton.querySelector('.download-label');
+        const downloadVersionLabel = downloadButton.querySelector('.download-version-label')
+        const altDownloadContainer = document.querySelector('.alt-download-container')
 
-            function getOS() {
-              const ua = navigator.userAgent;
-              if (ua.includes("Windows")) return "Windows";
-              if (ua.includes("Android")) return "Android";
-              if (ua.includes("iPhone") || ua.includes("iPad")) return "iOS";
-              if (ua.includes("Mac")) return "macOS";
-              if (ua.includes("Linux")) return "Linux";
-              return false
+        let downloadURLs = {};
+        let operatingSystem = "";
+
+        function getOS() {
+          const ua = navigator.userAgent;
+
+          if (ua.includes("Windows")) return "Windows";
+          if (ua.includes("Android")) return "Android";
+          if (ua.includes("iPhone") || ua.includes("iPad")) return "iOS";
+          if (ua.includes("Mac")) return "macOS";
+          if (ua.includes("Linux")) return "Linux";
+
+          return false
+        }
+
+        function getAssetSuffix(os) {
+          let suffix = "";
+
+          if (os === "Windows") { suffix = ".exe" }
+          if (os === "macOS") { suffix = ".dmg" }
+          if (os === "Linux") { suffix = ".AppImage" }
+          if (os === "Linux-deb") { suffix = ".deb" }
+          if (os === "Linux-rpm") { suffix = ".rpm" }
+
+          return suffix
+        }
+
+        async function getLatestRelease() {
+          const response = await fetch(
+            "https://api.github.com/repos/fredima2x/aspm27/releases/latest"
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch latest release");
+          }
+
+          return await response.json();
+        }
+
+        function getAssetURL(release, os) {
+          const suffix = getAssetSuffix(os);
+
+          const asset = release.assets.find(asset => {
+            const name = asset.name.toLowerCase();
+
+            return (
+              name.includes("aspm27") &&
+              name.endsWith(suffix.toLowerCase())
+            );
+          });
+
+          if (!asset) {
+            console.error(`Kein ${os}-Asset gefunden!`);
+            return null;
+          }
+
+          return asset.browser_download_url;
+        }
+
+        async function init() {
+          const cachedRelease = localStorage.getItem("latest_github_release");
+          const lastUpdate = localStorage.getItem("latest_github_release_last_update");
+          const oneDay = 24 * 60 * 60 * 1000;
+          let release;
+
+          if (
+            !cachedRelease ||
+            !lastUpdate ||
+            Date.now() - Number(lastUpdate) >= oneDay
+          ) {
+            try {
+              release = await getLatestRelease();
+            } catch {
+              console.error("Error Fetching Release Information!")
+              return;
             }
 
-            function getAssetSuffix(os) {
-              let suffix = "";
-              if (os === "Windows") { suffix = ".exe" }
-              if (os === "macOS") { suffix = ".dmg" }
-              if (os === "Linux") { suffix = ".AppImage"}
-              if (os === "Linux-deb") { suffix = ".deb" }
-              if (os === "Linux-rpm") { suffix = ".rpm" }
-              return suffix
-            }
+            localStorage.setItem("latest_github_release", JSON.stringify(release));
+            localStorage.setItem("latest_github_release_last_update", Date.now().toString());
+          } else {
+            release = JSON.parse(cachedRelease);
+          }
 
-            async function getLatestRelease() {
-              const response = await fetch(
-                "https://api.github.com/repos/fredima2x/aspm27/releases/latest"
-              );
-              return await response.json();
-            }
+          downloadURLs = {
+            "Windows": getAssetURL(release, "Windows"),
+            "macOS": getAssetURL(release, "macOS"),
+            "Linux": getAssetURL(release, "Linux"),
+            "Linux-deb": getAssetURL(release, "Linux-deb"),
+            "Linux-rpm": getAssetURL(release, "Linux-rpm"),
+          };
 
-            function getAssetURL(release, os) {
-              const suffix = getAssetSuffix(os);
+          operatingSystem = getOS();
 
-              const asset = release.assets.find(asset => {
-                const name = asset.name.toLowerCase();
+          downloadVersionLabel.textContent = release.tag_name;
 
-                return (
-                  name.includes("aspm27") &&
-                  name.endsWith(suffix.toLowerCase())
-                );
-              });
+          if (!operatingSystem || !supportedOS.includes(operatingSystem)) {
+            downloadOSLabel.textContent = "Your OS is not supported!";
+          } else {
+            downloadOSLabel.textContent = `${operatingSystem} (${getAssetSuffix(operatingSystem)})`;
+          }
 
-              if (!asset) {
-                console.error(`Kein ${os}-Asset gefunden!`);
-                return null;
-              }
+          let alternativeDownloads = [];
+          alternativeDownloads.push("Windows");
+          alternativeDownloads.push("macOS");
+          alternativeDownloads.push("Linux");
+          alternativeDownloads.push("Linux-deb");
+          alternativeDownloads.push("Linux-rpm");
 
-              return asset.browser_download_url;
-            }
+          alternativeDownloads = alternativeDownloads.filter(
+            element => element !== operatingSystem
+          );
 
-            async function init() {
-              const cachedRelease = localStorage.getItem("latest_github_release");
-              const lastUpdate = localStorage.getItem("latest_github_release_last_update");
-              const oneDay = 24 * 60 * 60 * 1000;
-              let release;
+          // Nur einmal leeren, nicht bei jedem Durchlauf
+          altDownloadContainer.innerHTML = "";
 
-              if (
-                !cachedRelease ||
-                !lastUpdate ||
-                Date.now() - Number(lastUpdate) >= oneDay
-              ) {
-                try {
-                  release = await getLatestRelease();
-                } catch {
-                  console.error("Error Fetching Release Information!")
-                  return;
-                }
-                localStorage.setItem("latest_github_release", JSON.stringify(release));
-                localStorage.setItem("latest_github_release_last_update", Date.now().toString());
-              } else {
-                release = JSON.parse(cachedRelease);
-              }
+          alternativeDownloads.forEach((os) => {
+            // <p> mit createElement erstellen
+            let element = document.createElement("a");
 
-              downloadURLs = {
-                "Windows": getAssetURL(release, "Windows"),
-                "macOS": getAssetURL(release, "macOS"),
-                "Linux": getAssetURL(release, "Linux"),
-                "Linux-deb": getAssetURL(release, "Linux-deb"),
-                "Linux-rpm": getAssetURL(release, "Linux-rpm"),
-              };
+            element.href = downloadURLs[os];
+            element.className = `alt-download-${os}`;
+            element.textContent = `- ${os} (${getAssetSuffix(os)})`;
 
-               operatingSystem = getOS();
+            altDownloadContainer.appendChild(element);
+          });
+        }
 
-              downloadVersionLabel.textContent = release.tag_name;
+        await init();
 
-              if (!operatingSystem || !supportedOS.includes(operatingSystem)) {
-                downloadOSLabel.textContent = "Your OS is not supported!";
-              } else {
-                downloadOSLabel.textContent = `${operatingSystem} (${getAssetSuffix(operatingSystem)})`;
-              }
+        downloadButton.addEventListener('click', () => {
+          const url = downloadURLs[operatingSystem];
 
-              let alternativeDownloads = [];
-              alternativeDownloads.push("Windows");
-              alternativeDownloads.push("macOS");
-              alternativeDownloads.push("Linux");
-              alternativeDownloads.push("Linux-deb");
-              alternativeDownloads.push("Linux-rpm");
-              alternativeDownloads = alternativeDownloads.filter(element => element !== operatingSystem);
+          if (!url) {
+            console.error("Keine Download-URL für", operatingSystem);
+            return;
+          }
 
-              alternativeDownloads.forEach((os) => {
-                altDownloadContainer.innerHTML = "";
-                let element = document.createElement(
-                  `<p href="${downloadURLs[os]}" class="alt-download-${os}">- ${os} (${getAssetSuffix(os)})</p>`
-                );
-                altDownloadContainer.appendChild(element);
-              });
-            }
+          downloadLabel.textContent = "Downloading...";
+          window.location.href = url;
+        });
 
-            await init();
-
-            downloadButton.addEventListener('click', () => {
-              const url = downloadURLs[operatingSystem];
-
-              if (!url) {
-                console.error("Keine Download-URL für", operatingSystem);
-                return;
-              }
-
-              downloadLabel.textContent = "Downloading...";
-              window.location.href = url;
-            });
-
-            </script>
-        </body>
-    </html>
-</DOCTYPE>
+        </script>
+    </body>
+</html>
