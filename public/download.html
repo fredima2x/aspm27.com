@@ -7,18 +7,19 @@
                 <p class="download-os-label">Loading...</p>
                 <p class="download-version-label">Loading...</p>
             </button>
-            <script>
-
+            <script type="module">
 
             const supportedOS = [
               "Windows", "macOS", "Linux"
             ]
 
+            const downloadButton = document.querySelector('.download-button');
+            const downloadOSLabel = downloadButton.querySelector('.download-os-label');
+            const downloadLabel = downloadButton.querySelector('.download-label');
+            const downloadVersionLabel = downloadButton.querySelector('.download-version-label')
 
-            let downloadButton = document.querySelector('.download-button');
-            let osLabel = downloadButton.querySelector('.download-os-label');
-            let downloadLabel = downloadButton.querySelector('.download-label');
-
+            let downloadURLs = {};
+            let operatingSystem = "";
 
             function getOS() {
               const ua = navigator.userAgent;
@@ -27,43 +28,76 @@
               if (ua.includes("iPhone") || ua.includes("iPad")) return "iOS";
               if (ua.includes("Mac")) return "macOS";
               if (ua.includes("Linux")) return "Linux";
-              return "unknown";
+              return false
             }
 
-            async function getLatestRelease() {
-              const response = await fetch(
-                "https://api.github.com/repos/user/repo/releases/latest"
-              );
-              return await response.json();
-            }
-
-            async function getAssetURL(release, os) {
+            function getAssetSuffix(os) {
               let suffix = "";
               if (os === "Windows") { suffix = ".exe" }
               if (os === "macOS") { suffix = ".dmg" }
               if (os === "Linux") { suffix = ".AppImage"}
+              if (os === "Linux-deb") { suffix = ".deb" }
+              if (os === "Linux-rpm") { suffix = ".rpm" }
+              return suffix
+            }
+
+            async function getLatestRelease() {
+              const response = await fetch(
+                "https://api.github.com/repos/fredima2x/aspm27/releases/latest"
+              );
+              return await response.json();
+            }
+
+            function getAssetURL(release, os) {
+              const suffix = getAssetSuffix(os);
 
               const asset = release.assets.find(asset => {
                 const name = asset.name.toLowerCase();
+
                 return (
                   name.includes("aspm27") &&
-                  name.includes(suffix)
+                  name.endsWith(suffix.toLowerCase())
                 );
               });
+
+              if (!asset) {
+                console.error(`Kein ${os}-Asset gefunden!`);
+                return null;
+              }
 
               return asset.browser_download_url;
             }
 
             async function init() {
-              const release = getLatestRelease();
+              const release = await getLatestRelease();
+              downloadURLs = {
+                "Windows": getAssetURL(release, "Windows"),
+                "macOS": getAssetURL(release, "macOS"),
+                "Linux": getAssetURL(release, "Linux"),
+              }
+              operatingSystem = getOS();
 
+              downloadVersionLabel.textContent = release.tag_name;
+
+              if (!operatingSystem) {
+                downloadOSLabel.textContent = "Your OS is not supported!";
+              } else {
+                downloadOSLabel.textContent = `${operatingSystem} (${getAssetSuffix(operatingSystem)})`;
+              }
             }
 
             await init();
 
             downloadButton.addEventListener('click', () => {
-              downloadLabel.textContent = 'Downloading...';
-              osLabel.textContent = '';
+              const url = downloadURLs[operatingSystem];
+
+              if (!url) {
+                console.error("Keine Download-URL für", operatingSystem);
+                return;
+              }
+
+              downloadLabel.textContent = "Downloading...";
+              window.location.href = url;
             });
 
             </script>
