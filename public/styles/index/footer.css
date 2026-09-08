@@ -9,8 +9,9 @@ footer .footer-box {
     align-items: right;
     padding: 20px;
     padding-inline: clamp(40px, 8vw, 100px) !important;
-    background: rgb(0, 50, 0);
-    color: rgb(180, 255, 180);
+    background-color: var(--black);
+    background-image: linear-gradient(to left, rgba(0, 219, 124, 0.3), rgba(0, 255, 145, 0.5));
+    color: var(--black);
     border-top: 2px solid var(--theme);
 }
 
