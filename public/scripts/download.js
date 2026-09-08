@@ -7,6 +7,8 @@ const downloadOSLabel = document.querySelector('.download-os-label');
 const downloadLabel = document.querySelector('.download-label');
 const downloadVersionLabel = document.querySelector('.download-version-label')
 const altDownloadContainer = document.querySelector('.alt-download-container')
+const sizeLabel = document.querySelector('.download-size-label')
+
 
 let downloadURLs = {};
 let operatingSystem = "";
@@ -67,7 +69,68 @@ function getAssetURL(release, os) {
   return asset.browser_download_url;
 }
 
+function getAssetSize(release, os) {
+  const asset = release.assets.find(asset => {
+    const name = asset.name.toLowerCase();
+
+    return (
+      name.includes("aspm27") &&
+      name.endsWith(getAssetSuffix(os).toLowerCase())
+    );
+  });
+
+  if (!asset) {
+    console.error(`Kein ${os}-Asset gefunden!`);
+    return null;
+  }
+
+  return asset.size;
+}
+
+function formatBytes(bytes) {
+  const units = ['B', 'K', 'M', 'G', 'T'];
+  let i = 0;
+
+  while (bytes >= 1024 && i < units.length - 1) {
+    bytes /= 1024;
+    i++;
+  }
+
+  return `${bytes.toFixed(i === 0 ? 0 : 1).replace(/\.0$/, '')}${units[i]}`;
+}
+
 async function init() {
+  const release = await getRelease();
+  if (!release) return;
+
+  downloadURLs = updateDownloadURLs(release);
+  operatingSystem = getOS();
+
+  updateDownloadLabel(operatingSystem, release);
+  updateAlternativeDownloads(operatingSystem)
+  updateSizeLabel(release, operatingSystem);
+}
+
+function updateDownloadLabel(current, release) {
+  downloadVersionLabel.textContent = release.tag_name;
+  if (!current || !supportedOS.includes(current)) {
+    downloadOSLabel.textContent = "Your OS is not supported!";
+  } else {
+    downloadOSLabel.textContent = `${current} (${getAssetSuffix(current)})`;
+  }
+}
+
+function updateDownloadURLs(release) {
+  return {
+    "Windows": getAssetURL(release, "Windows"),
+    "macOS": getAssetURL(release, "macOS"),
+    "Linux": getAssetURL(release, "Linux"),
+    "Linux-deb": getAssetURL(release, "Linux-deb"),
+    "Linux-rpm": getAssetURL(release, "Linux-rpm"),
+  };
+}
+
+async function getRelease() {
   const cachedRelease = localStorage.getItem("latest_github_release");
   const lastUpdate = localStorage.getItem("latest_github_release_last_update");
   const oneHour = 60 * 60 * 1000;
@@ -91,52 +154,57 @@ async function init() {
     release = JSON.parse(cachedRelease);
   }
 
-  downloadURLs = {
-    "Windows": getAssetURL(release, "Windows"),
-    "macOS": getAssetURL(release, "macOS"),
-    "Linux": getAssetURL(release, "Linux"),
-    "Linux-deb": getAssetURL(release, "Linux-deb"),
-    "Linux-rpm": getAssetURL(release, "Linux-rpm"),
-  };
+  return release;
+}
 
-  operatingSystem = getOS();
+function updateAlternativeDownloads(current) {
+    let alternativeDownloads = [
+        "Windows",
+        "macOS",
+        "Linux",
+        "Linux-deb",
+        "Linux-rpm"
+    ];
 
-  downloadVersionLabel.textContent = release.tag_name;
+    alternativeDownloads = alternativeDownloads.filter(
+        element => element !== current
+    );
 
-  if (!operatingSystem || !supportedOS.includes(operatingSystem)) {
-    downloadOSLabel.textContent = "Your OS is not supported!";
-  } else {
-    downloadOSLabel.textContent = `${operatingSystem} (${getAssetSuffix(operatingSystem)})`;
-  }
+    altDownloadContainer.innerHTML = "";
 
-  let alternativeDownloads = [];
-  alternativeDownloads.push("Windows");
-  alternativeDownloads.push("macOS");
-  alternativeDownloads.push("Linux");
-  alternativeDownloads.push("Linux-deb");
-  alternativeDownloads.push("Linux-rpm");
+    // "Other versions" immer als erste Option
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Other versions";
+    defaultOption.selected = true;
+    defaultOption.disabled = true;
 
-  alternativeDownloads = alternativeDownloads.filter(
-    element => element !== operatingSystem
-  );
+    altDownloadContainer.appendChild(defaultOption);
 
-  altDownloadContainer.innerHTML = "";
+    alternativeDownloads.forEach((os) => {
+        const element = document.createElement("option");
 
-  alternativeDownloads.forEach((os) => {
-    let element = document.createElement("option");
+        element.value = os;
+        element.textContent = `${os} (${getAssetSuffix(os)})`;
 
-    element.value = os;
-    element.textContent = `${os} (${getAssetSuffix(os)})`;
+        altDownloadContainer.appendChild(element);
+    });
+}
 
-    altDownloadContainer.appendChild(element);
-  });
+function updateSizeLabel(release, os) {
+  const size = formatBytes(getAssetSize(release, os));
+  sizeLabel.textContent = `${size}`;
 }
 
 await init();
 
-altDownloadContainer.addEventListener('change', () => {
+
+
+altDownloadContainer.addEventListener('change', async () => {
   operatingSystem = altDownloadContainer.value;
   downloadOSLabel.textContent = `${operatingSystem} (${getAssetSuffix(operatingSystem)})`;
+  updateSizeLabel(await getRelease(), operatingSystem)
+  updateAlternativeDownloads(operatingSystem)
   downloadLabel.textContent = "Download";
 });
 

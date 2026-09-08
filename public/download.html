@@ -51,13 +51,14 @@
 			outline: none;
 		}
 
-		.download-version-label {
+		.download-version-label, .download-size-label {
 			font-size: 0.8rem;
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			color: rgba(255, 255, 255, 0.5);
+			color: rgba(255, 255, 255, 0.5) !important;
 			margin-top: 5px;
+			margin-inline: 5px;
 		}
 
 		.download-page {
@@ -79,6 +80,16 @@
 			transition: 0.3s;
 			min-width: 100%;
 		}
+
+		.download-dialog {
+			margin: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: row;
+			padding: 0;
+		}
+
 
 		.download-button:hover {
 			transform: scale(1.05);
@@ -124,7 +135,10 @@
 					<p class="download-os-label">Loading...</p>
 				</div>
 			</button>
-			<p class="download-version-label">Loading...</p>
+			<div class="download-dialog">
+				<p class="download-version-label">Loading...</p>
+				<p class="download-size-label">Loading...</p>
+			</div>
 		</div>
 		<select class="alt-download-container">
 			<option class="alt-download-menu">Other versions</option>
