@@ -3,9 +3,9 @@ const supportedOS = [
 ]
 
 const downloadButton = document.querySelector('.download-button');
-const downloadOSLabel = downloadButton.querySelector('.download-os-label');
-const downloadLabel = downloadButton.querySelector('.download-label');
-const downloadVersionLabel = downloadButton.querySelector('.download-version-label')
+const downloadOSLabel = document.querySelector('.download-os-label');
+const downloadLabel = document.querySelector('.download-label');
+const downloadVersionLabel = document.querySelector('.download-version-label')
 const altDownloadContainer = document.querySelector('.alt-download-container')
 
 let downloadURLs = {};
