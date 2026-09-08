@@ -16,7 +16,8 @@ body {
   padding: 0px;
   margin: 0px;
   min-height: 100vh;
-  background-color: var(--background);
+  background-color: var(--black);
+  background-image: linear-gradient(to left, rgba(0, 219, 124, 0.3), rgba(0, 255, 145, 0.5));
 }
 
 main {
