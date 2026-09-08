@@ -1,0 +1,32 @@
+footer {
+    padding: 0;
+}
+
+footer .footer-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: right;
+    padding: 20px;
+    padding-inline: clamp(40px, 8vw, 100px) !important;
+    background: rgb(0, 50, 0);
+    color: rgb(180, 255, 180);
+    border-top: 2px solid var(--theme);
+}
+
+footer .footer-social {
+    display: flex;
+    flex-direction: row;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer .footer-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    padding: 20px;
+}
