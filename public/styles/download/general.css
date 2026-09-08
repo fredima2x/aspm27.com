@@ -24,3 +24,8 @@ select:hover {
 select:focus {
   outline: none;
 }
+
+.download-icon {
+  height: 60px;
+  margin: 20px;
+}

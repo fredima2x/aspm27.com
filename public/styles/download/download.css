@@ -22,7 +22,20 @@
   padding-top: 30px !important;
   padding: 40px;
   border-radius: 10px;
+  animation: fadeIn 1s ease-in-out forwards;
 }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 .download-button {
   background-color: var(--black);

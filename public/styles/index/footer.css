@@ -31,3 +31,7 @@ footer .footer-links {
     align-items: left;
     padding: 20px;
 }
+
+.github-footer-logo {
+    height: 30px;
+}
