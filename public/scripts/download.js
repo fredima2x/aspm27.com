@@ -125,14 +125,20 @@ async function init() {
   alternativeDownloads.forEach((os) => {
     let element = document.createElement("option");
 
-    element.className = `alt-download-container`;
-    element.innerHTML = `<option><a href="${downloadURLs[os]}">${os} (${getAssetSuffix(os)})</a></option>`;
+    element.value = os;
+    element.textContent = `${os} (${getAssetSuffix(os)})`;
 
     altDownloadContainer.appendChild(element);
   });
 }
 
 await init();
+
+altDownloadContainer.addEventListener('change', () => {
+  operatingSystem = altDownloadContainer.value;
+  downloadOSLabel.textContent = `${operatingSystem} (${getAssetSuffix(operatingSystem)})`;
+  downloadLabel.textContent = "Download";
+});
 
 downloadButton.addEventListener('click', () => {
   const url = downloadURLs[operatingSystem];
