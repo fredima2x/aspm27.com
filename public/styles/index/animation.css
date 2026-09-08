@@ -5,7 +5,6 @@
 }
 
 .fade-in-left {
-	opacity: 0;
 	animation: fade-in-left 1s ease-in;
 	animation-delay: 6s;
 }
