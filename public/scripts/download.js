@@ -8,7 +8,7 @@ const downloadLabel = document.querySelector('.download-label');
 const downloadVersionLabel = document.querySelector('.download-version-label')
 const altDownloadContainer = document.querySelector('.alt-download-container')
 const sizeLabel = document.querySelector('.download-size-label')
-
+const downloadIcon = document.querySelector('.download-icon');
 
 let downloadURLs = {};
 let operatingSystem = "";
@@ -109,6 +109,7 @@ async function init() {
   updateDownloadLabel(operatingSystem, release);
   updateAlternativeDownloads(operatingSystem)
   updateSizeLabel(release, operatingSystem);
+  updateDownloadIcon(operatingSystem)
 }
 
 function updateDownloadLabel(current, release) {
@@ -191,6 +192,16 @@ function updateAlternativeDownloads(current) {
     });
 }
 
+function updateDownloadIcon(os) {
+  let suffix;
+  if (os === "Windows") { suffix = "windows2" }
+  if (os === "macOS") { suffix = "macos" }
+  if (os === "Linux" || os === "Linux-rpm" || os === "Linux-deb") { suffix = "linux" }
+
+  downloadIcon.src = `./assets/${suffix}.svg`;
+  downloadIcon.alt = `${os} logo`;
+}
+
 function updateSizeLabel(release, os) {
   const size = formatBytes(getAssetSize(release, os));
   sizeLabel.textContent = `${size}`;
@@ -205,6 +216,7 @@ altDownloadContainer.addEventListener('change', async () => {
   downloadOSLabel.textContent = `${operatingSystem} (${getAssetSuffix(operatingSystem)})`;
   updateSizeLabel(await getRelease(), operatingSystem)
   updateAlternativeDownloads(operatingSystem)
+  updateDownloadIcon(operatingSystem)
   downloadLabel.textContent = "Download";
 });
 

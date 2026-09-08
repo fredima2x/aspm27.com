@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="./styles/index/general.css">
 	<link rel="stylesheet" href="./styles/index/header.css">
 	<link rel="stylesheet" href="./styles/index/fonts.css">
-
+	<link rel="stylesheet" href="./styles/index/animations.css">
 	<style>
 		.headline {
 			color: var(--white);
@@ -70,10 +70,23 @@
 			padding-top: 30px !important;
 			padding: 40px;
 			border-radius: 10px;
+			animation: fadeIn 1s ease-in-out forwards;
+		}
+		@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
 		}
 
 		.download-button {
-			background-color: var(--black);
+		    background-color: black;
+			background-image: linear-gradient(to right, rgb(15, 15, 15), rgba(0, 219, 124, 0.25));
 			color: var(--white);
 			border: 4px solid var(--theme);
 			border-radius: 10px;
@@ -95,11 +108,28 @@
 			transform: scale(1.05);
 		}
 
+		.download-icon {
+			height: 40px;
+			margin: 20px;
+		}
+
+		.download-label {
+			margin-top: 0;
+			margin-bottom: 6px;
+		}
+		.download-os-label {
+			margin-top: 6px;
+		}
+		.alt-download-container {
+			background-image: linear-gradient(to right, rgb(15, 15, 15), rgba(0, 219, 124, 0.25));
+		}
+
 		@media (max-width: 768px) {
 			body {
 				padding-top: 40% !important;
 			}
 		}
+
 	</style>
 </head>
 
@@ -130,6 +160,7 @@
 		<h2 class="headline">Download aspm27</h2>
 		<div class="download-box">
 			<button class="download-button">
+			    <img class="download-icon" src="./assets/loading.svg" alt="Windows logo">
 				<div class="download-button-text">
 					<p class="download-label">Download</p>
 					<p class="download-os-label">Loading...</p>
