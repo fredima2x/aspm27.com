@@ -14,17 +14,43 @@
 	<link rel="stylesheet" href="./styles/index/fonts.css">
 
 	<style>
-    	.headline {
-    		color: var(--white);
-            margin-top: 0px;
-    	}
-    	body {
-            color: var(--black);
-            justify-items: center;
-            padding-top: 100px;
-            background-color: black;
-            background-image: linear-gradient(to right,rgba(0, 219, 124, 0.50),black);
-    	}
+		.headline {
+			color: var(--white);
+			margin-top: 0px;
+		}
+
+		body {
+			color: var(--black);
+			justify-items: center;
+			padding-top: 100px;
+			background-color: black;
+			background-image: linear-gradient(to right, rgba(0, 219, 124, 0.50), black);
+		}
+
+		a {
+			color: var(--theme);
+			text-decoration: none;
+		}
+
+		select {
+			width: 100%;
+			background-color: var(--black);
+			color: var(--white);
+			padding: 10px;
+			cursor: pointer;
+			transition: 0.3s;
+			border-radius: 10px;
+			border: 4px solid var(--theme);
+		}
+
+		select:hover {
+			transform: scale(1.05);
+		}
+
+		select:focus {
+			outline: none;
+		}
+
 		.download-version-label {
 			font-size: 0.8rem;
 			display: flex;
@@ -33,8 +59,9 @@
 			color: rgba(255, 255, 255, 0.5);
 			margin-top: 5px;
 		}
+
 		.download-page {
-		    min-width: 360px;
+			min-width: 360px;
 			justify-content: center;
 			align-items: center;
 			box-shadow: 0px 0px 15px rgb(15, 15, 15);
@@ -43,31 +70,18 @@
 			padding: 40px;
 			border-radius: 10px;
 		}
+
 		.download-button {
 			background-color: var(--black);
 			color: var(--white);
 			border: 4px solid var(--theme);
-            border-radius: 10px;
-            transition: 0.3s;
-            min-width: 100%;
-		}
-		.download-button:hover {
-		    background-color: var(--theme);
-			color: var(--black);
-		}
-		.alt-download-menu {
-			background-color: var(--black);
-			color: var(--white);
-			padding: 10px;
-			cursor: pointer;
+			border-radius: 10px;
 			transition: 0.3s;
-		}
-		.alt-download-menu:hover {
-			transform: scale(1.05);
+			min-width: 100%;
 		}
 
-		header {
-		    box-shadow: 0 2px 2px var(--theme);
+		.download-button:hover {
+			transform: scale(1.05);
 		}
 
 		@media (max-width: 768px) {
@@ -93,7 +107,7 @@
 		<div class="content-centered-row">
 			<p>Contact us:</p>
 			<a href="https://github.com/fredima2x/aspm27">
-				<img src="./assets/GitHub_Lockup_White.svg" alt="GitHub logo">
+				<img src="./assets/GitHub_Lockup_Black.svg" alt="GitHub logo">
 			</a>
 			<a href="https://facebook.com">
 				<img src="./assets/Facebook_Logo_Primary.png" alt="FaceBook logo">
@@ -103,23 +117,18 @@
 
 	<div class="download-page">
 		<h2 class="headline">Download aspm27</h2>
-	    <div class="download-box">
-    		<button class="download-button">
-    			<div class="download-button-text">
-    				<p class="download-label">Download</p>
-    				<p class="download-os-label">Loading...</p>
-    			</div>
-    		</button>
-    		<p class="download-version-label">Loading...</p>
+		<div class="download-box">
+			<button class="download-button">
+				<div class="download-button-text">
+					<p class="download-label">Download</p>
+					<p class="download-os-label">Loading...</p>
+				</div>
+			</button>
+			<p class="download-version-label">Loading...</p>
 		</div>
-		<details>
-			<summary class="alt-download-menu">Show more</summary>
-			<div class="alt-download-menu-content">
-    			<ul class="alt-download-container">
-    				Loading...
-    			</ul>
-			</div>
-		</details>
+		<select class="alt-download-container">
+			<option class="alt-download-menu">Other versions</option>
+		</select>
 
 	</div>
 

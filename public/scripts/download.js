@@ -123,10 +123,10 @@ async function init() {
   altDownloadContainer.innerHTML = "";
 
   alternativeDownloads.forEach((os) => {
-    let element = document.createElement("li");
+    let element = document.createElement("option");
 
-    element.className = `alt-download`;
-    element.innerHTML = `<a href="${downloadURLs[os]}">${os} (${getAssetSuffix(os)})<br></a>`;
+    element.className = `alt-download-container`;
+    element.innerHTML = `<option><a href="${downloadURLs[os]}">${os} (${getAssetSuffix(os)})</a></option>`;
 
     altDownloadContainer.appendChild(element);
   });
