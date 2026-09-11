@@ -1,3 +1,48 @@
+/* google-sans-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../assets/fonts/google-sans-v70-latin/google-sans-v70-latin-regular.woff2') format('woff2');
+}
+
+/* google-sans-italic - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Google Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: url('../../assets/fonts/google-sans-v70-latin/google-sans-v70-latin-italic.woff2') format('woff2');
+}
+
+/* google-sans-500 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../../assets/fonts/google-sans-v70-latin/google-sans-v70-latin-500.woff2') format('woff2');
+}
+
+/* google-sans-700 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../../assets/fonts/google-sans-v70-latin/google-sans-v70-latin-700.woff2') format('woff2');
+}
+
+/* archivo-black-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Archivo Black';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../assets/fonts/archivo-black-v23-latin-regular.woff2') format('woff2');
+}
+
 .archivo-black-regular {
   font-family: "Archivo Black", sans-serif;
   font-weight: 400;
